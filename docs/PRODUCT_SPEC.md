@@ -70,3 +70,7 @@ Users explicitly request OpenAI extraction, which sends the chosen file to the c
 Run the complete marketing and vendor flows; exercise rejection/resubmission, missing/unreviewed documents, wrong role, person assignment, threshold escalation, wrong tenant, stale versions, duplicate request IDs, money arithmetic, and reset. Verify template editing does not mutate active instances. Check persistence across refresh and RLS in separate accounts/workspaces.
 
 Live Auth, Storage, and OpenAI acceptance tests require configured services. SQL tests with PGlite verify migrations and RLS but do not prove external service setup. No email, Slack, Xero, bank feed, Round MCP, real payment execution, multi-currency conversion, parallel BPMN execution, background automation, or full accounting ledger is in this version.
+
+## Lightfern import
+
+The Lightfern client uses a bearer-authenticated bridge on the existing Vercel backend. Native demo files remain separate from private workspaces in the existing Supabase database and private storage. The bridge ignores browser cookies, validates explicit bearer sessions and retains membership-derived roles, tenant RLS and all existing execution controls. Ordinary web authentication remains cookie-based. See LIGHTFERN.md for validation commands and configuration limits. Reopening the native view requires sign-in; credentials and session tokens are not saved to library files.

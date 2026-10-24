@@ -51,7 +51,7 @@ For new financial effects, define invariants first. Current available = received
 
 ## Verification and remaining limits
 
-The automated suite now has 23 passing tests, including graph execution and graph JSON persistence under tenant RLS. `npm run test:live` explicitly creates two synthetic accounts and workspace fixtures against configured Supabase, exercises the local app (override `SMOKE_ORIGIN` for production), and cleans up only its own records. It uses generated signup tokens without sending email. Run the app before this optional suite.
+The automated suite now has 25 passing tests, including bearer-token parsing, concurrent request isolation, graph execution and graph JSON persistence under tenant RLS. `npm run test:live` explicitly creates two synthetic accounts and workspace fixtures against configured Supabase, exercises the local app (override `SMOKE_ORIGIN` for production), and cleans up only its own records. It uses generated signup tokens without sending email. Run the app before this optional suite. Set `SMOKE_LIGHTFERN=1` to exercise the bearer-authenticated bridge, including token refresh and sign-out.
 
 The canvas supports success, threshold, rejection-to-revision and rejection-to-cancel routes. Required controls cannot be bypassed, forward cycles and parallel fan-out are rejected, and revision loops cannot repeat financial effects. Existing running instances retain their frozen legacy templates. No Gmail, Slack, Xero, external sending, bank feed or payment integration was added. OpenAI and production SMTP remain external configuration.
 
@@ -64,3 +64,7 @@ npm run dev
 ```
 
 Stop the dev server before `npm run check`. For production locally, use `npm run build` then `npm start`.
+
+## Lightfern import
+
+The Lightfern backend patch is integrated, with corrected bearer-token parsing and dedicated authentication tests. The bridge runs on the existing Vercel backend and delegates to existing server-validated APIs using the same Supabase database and private storage. It accepts explicit bearer sessions from opaque origins and ignores browser cookies. Native demo files remain separate from private workspace records. See LIGHTFERN.md for endpoint verification and remaining SMTP/OpenAI configuration. Reopening the native view requires sign-in; credentials and session tokens are not saved to library files.
